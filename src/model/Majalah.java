@@ -24,8 +24,11 @@ public class Majalah extends KoleksiPustaka implements Terarsip {
 
     @Override
     public String deskripsi() {
-        return super.deskripsi() + " | Edisi: " + edisi + " | Bulan: " + bulanTerbit + " | Terbaru: " + edisiTerbaru;
-    }
+        return super.deskripsi()
+                + "\nEdisi: " + edisi
+                + "\nBulan: " + bulanTerbit
+                + "\nTerbaru: " + edisiTerbaru;
+}
 
     @Override
     public String nomorRak() {

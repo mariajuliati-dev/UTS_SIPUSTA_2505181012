@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import eksepsi.KoleksiSedangDipinjamException;
 /**
  *
  * @author Maria
@@ -23,37 +24,62 @@ public class KatalogPustaka {
     public List<KoleksiPustaka> getDaftarKoleksi() {
         return daftarKoleksi;
     }
-
+    
     public void cetakStatus() {
-        System.out.println("STATUS KATALOG PERPUSTAKAAN");
-        for (KoleksiPustaka k : daftarKoleksi) {
-            System.out.println(k.deskripsi());
-            System.out.println("-> Layak Dipinjam: " + (k.cekKelayakanPinjam() ? "Ya" : "Tidak"));
-            System.out.println("--------------------------------------------------");
-        }
+    System.out.println("===== STATUS KATALOG PERPUSTAKAAN =====");
+
+    for (KoleksiPustaka k : daftarKoleksi) {
+        System.out.println("---------------------------------------");
+        System.out.println("Kode: " + k.getKodeKoleksi());
+        System.out.println("Judul: " + k.getJudul());
+        System.out.println("Deskripsi:" );
+        System.out.println(k.deskripsi());
+        System.out.println("Layak Pinjam: " +
+                (k.cekKelayakanPinjam() ? "Ya" : "Tidak"));
     }
+
+    System.out.println("---------------------------------------");
+}
 
     public void urut(Comparator<KoleksiPustaka> comparator) {
         Collections.sort(daftarKoleksi, comparator);
     }
 
-    public void pinjam(String kodeKoleksi) throws KoleksiTidakLayakException {
-        KoleksiPustaka target = null;
-        for (KoleksiPustaka k : daftarKoleksi) {
-            if (k.getKodeKoleksi().equalsIgnoreCase(kodeKoleksi)) {
-                target = k;
-                break;
-            }
-        }
+    public void pinjam(String kodeKoleksi)
+        throws KoleksiTidakLayakException,
+               KoleksiSedangDipinjamException {
 
-        if (target == null) {
-            throw new KoleksiTidakLayakException("Maaf, koleksi dengan kode " + kodeKoleksi + " tidak ditemukan di sistem perpustakaan.");
-        }
+    KoleksiPustaka target = null;
 
-        if (!target.cekKelayakanPinjam()) {
-            throw new KoleksiTidakLayakException("Maaf, koleksi \"" + target.getJudul() + "\" saat ini tidak layak untuk dipinjam.");
+    for (KoleksiPustaka k : daftarKoleksi) {
+        if (k.getKodeKoleksi().equalsIgnoreCase(kodeKoleksi)) {
+            target = k;
+            break;
         }
-
-        System.out.println("Peminjaman berhasil! Silakan ambil koleksi: " + target.getJudul());
     }
+
+    if (target == null) {
+        throw new KoleksiTidakLayakException(
+                "Koleksi dengan kode " + kodeKoleksi + " tidak ditemukan."
+        );
+    }
+
+    if (!target.cekKelayakanPinjam()) {
+        throw new KoleksiTidakLayakException(
+                "Koleksi \"" + target.getJudul() + "\" tidak layak dipinjam."
+        );
+    }
+
+    if (target.isSedangDipinjam()) {
+        throw new KoleksiSedangDipinjamException(
+                "Koleksi \"" + target.getJudul() + "\" sedang dipinjam."
+        );
+    }
+
+    target.setSedangDipinjam(true);
+
+    System.out.println(
+            "Peminjaman berhasil! Silakan ambil koleksi: " + target.getJudul()
+    );
+}
 }

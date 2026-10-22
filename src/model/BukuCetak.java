@@ -21,10 +21,14 @@ public class BukuCetak extends KoleksiPustaka implements Terarsip {
         return !sedangDiperbaiki;
     }
 
-    @Override
+   @Override
     public String deskripsi() {
-        return super.deskripsi() + " | Halaman: " + jumlahHalaman + " | Status Perbaikan: " + (sedangDiperbaiki ? "Sedang Diperbaiki" : "Tidak");
+        return super.deskripsi()
+                + "\nHalaman: " + jumlahHalaman
+                + "\nStatus Perbaikan: "
+                + (sedangDiperbaiki ? "Sedang Diperbaiki" : "Tidak");
     }
+
 
     @Override
     public String nomorRak() {

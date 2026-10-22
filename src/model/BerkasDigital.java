@@ -20,8 +20,10 @@ public class BerkasDigital extends KoleksiPustaka {
         return true;
     }
 
-    @Override
+   @Override
     public String deskripsi() {
-        return super.deskripsi() + " | Ukuran: " + ukuranMB + " MB | Tautan: " + tautanUnduh;
-    }
+        return super.deskripsi()
+                + "\nUkuran: " + ukuranMB + " MB"
+                + "\nTautan: " + tautanUnduh;
+}
 }

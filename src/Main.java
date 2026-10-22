@@ -38,6 +38,12 @@ public class Main {
         } catch (PustakaException e) {
             System.out.println("Pesan Eksepsi Tertangkap: " + e.getMessage());
         }
+        
+        try {
+            katalog.pinjam("BK-001");
+        } catch (PustakaException e) {
+            System.out.println("Pesan Eksepsi Tertangkap: " + e.getMessage());
+        }
 
         System.out.println("\n 4. UJI EKSPOR BERKAS TEKS (katalog.txt)");
         EksporKatalog.simpanKeBerkas(katalog, "katalog.txt");

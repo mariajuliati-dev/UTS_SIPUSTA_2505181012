@@ -9,11 +9,13 @@ public abstract class KoleksiPustaka {
     protected String kodeKoleksi;
     protected String judul;
     protected int tahunTerbit;
+    private boolean sedangDipinjam;
 
     public KoleksiPustaka(String kodeKoleksi, String judul, int tahunTerbit) {
         this.kodeKoleksi = kodeKoleksi;
         this.judul = judul;
         this.tahunTerbit = tahunTerbit;
+        this.sedangDipinjam = false;
     }
 
     public String getKodeKoleksi() {
@@ -27,10 +29,19 @@ public abstract class KoleksiPustaka {
     public int getTahunTerbit() {
         return tahunTerbit;
     }
+    
+    public boolean isSedangDipinjam() {
+        return sedangDipinjam;
+    }
+    public void setSedangDipinjam(boolean sedangDipinjam) {
+        this.sedangDipinjam = sedangDipinjam;
+    }
 
     public abstract boolean cekKelayakanPinjam();
 
     public String deskripsi() {
-        return "Kode: " + kodeKoleksi + " | Judul: " + judul + " | Tahun: " + tahunTerbit;
-    }
+        return "Kode: " + kodeKoleksi
+                + "\nJudul: " + judul
+                + "\nTahun: " + tahunTerbit;
+}
 }
