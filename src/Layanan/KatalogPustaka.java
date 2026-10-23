@@ -1,6 +1,7 @@
-package Layanan;
+package layanan;
 import model.KoleksiPustaka;
 import eksepsi.KoleksiTidakLayakException;
+import eksepsi.PustakaException; // [DIUBAH] Menambahkan import untuk PustakaException
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,7 +47,8 @@ public class KatalogPustaka {
     }
 
     public void pinjam(String kodeKoleksi)
-        throws KoleksiTidakLayakException,
+        throws PustakaException, // [DIUBAH] Menambahkan PustakaException ke daftar throws
+               KoleksiTidakLayakException,
                KoleksiSedangDipinjamException {
 
     KoleksiPustaka target = null;
@@ -58,8 +60,9 @@ public class KatalogPustaka {
         }
     }
 
+    // [PERBAIKAN UTS] Mengganti KoleksiTidakLayakException menjadi PustakaException 
     if (target == null) {
-        throw new KoleksiTidakLayakException(
+        throw new PustakaException(
                 "Koleksi dengan kode " + kodeKoleksi + " tidak ditemukan."
         );
     }
@@ -81,5 +84,5 @@ public class KatalogPustaka {
     System.out.println(
             "Peminjaman berhasil! Silakan ambil koleksi: " + target.getJudul()
     );
-}
+    }
 }
